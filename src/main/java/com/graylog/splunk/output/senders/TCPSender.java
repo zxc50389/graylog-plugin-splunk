@@ -147,8 +147,11 @@ public class TCPSender implements Sender {
 
     @Override
     public void send(Message message) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd-HH:mm:ss.SSS");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC+08:00"));
+        
         StringBuilder splunkMessage = new StringBuilder();
-        splunkMessage.append(message.getTimestamp().toString("yyyy/MM/dd-HH:mm:ss.SSS"))
+        splunkMessage.append(dateFormat.format(message.getTimestamp()))
                 .append(" ")
                 .append(noNewLines(message.getMessage()))
                 .append(" original_source=").append(escape(message.getField(Message.FIELD_SOURCE)));
